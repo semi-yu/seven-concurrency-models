@@ -1,3 +1,9 @@
+"""
+  Coded and tested on:
+      Elixir 1.18.4
+      Erlang/OTP 27
+"""
+
 defmodule CacheActor do
   def loop(pages, size) do
     receive do
@@ -125,6 +131,19 @@ defmodule CacheSupervisor do
     [CacheActor.start_link | Enum.filter(pids, fn p -> p != terminated end)]
   end
 end
+
+"""
+    test
+
+    (1) put five pages
+    (2) get five pages
+    (3) put one page, failing
+    (4) cache repair: observe the difference of pid list
+    (5) put one page
+    (6) get one page
+    (7) get one page never put
+
+"""
 
 CacheSupervisor.start(3)
 IO.puts("starting cache...")
